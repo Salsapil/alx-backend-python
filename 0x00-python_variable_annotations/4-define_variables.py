@@ -16,7 +16,7 @@ float: A floating-point number with a value of 3.14.
 
 i_understand_annotations: bool = True
 """
-bool: A boolean indicating the understanding of annotations with a value of True.
+bool: value of True.
 """
 
 school: str = "Holberton"
