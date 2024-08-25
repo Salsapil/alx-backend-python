@@ -17,7 +17,7 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])
-    def test_get_json(self, test_url, test_payload):
+    def test_get_json(self, test_url, test_payload) -> None:
         # temporarily replaces requests.get with a mock object.
         with patch('utils.requests.get') as mock_get:
             # creates a mock response object with a json method
@@ -41,7 +41,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
+    def test_access_nested_map(self, nested_map, path, expected) -> None:
         """method to test that the method returns what it is supposed to"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
@@ -49,7 +49,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({}, ("a",)),
         ({"a": 1}, ("a", "b")),
     ])
-    def test_access_nested_map_exception(self, nested_map, path):
+    def test_access_nested_map_exception(self, nested_map, path) -> None:
         with self.assertRaises(KeyError) as err:
             access_nested_map(nested_map, path)
         self.assertEqual(str(err.exception), f"'{path[-1]}'")
@@ -57,7 +57,7 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestMemoize(unittest.TestCase):
     """Memoize class"""
-    def test_memoize(self):
+    def test_memoize(self) -> None:
         """test_memoize method"""
         class TestClass:
             def a_method(self):
