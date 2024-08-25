@@ -34,7 +34,7 @@ class TestGithubOrgClient(unittest.TestCase):
     # patches the org property of GithubOrgClient to make it a PropertyMock.
     # This allows you to mock the property and control its return value.
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
-    def test_public_repos_url(self, mock_org):
+    def test_public_repos_url(self, mock_org) -> None:
         # set to a dictionary with the key repos_url.
         # This simulates the expected response from the org property.
         mock_org.return_value = {
@@ -51,7 +51,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_org.assert_called_once()
 
     @patch('client.get_json')
-    def test_public_repos(self, mock_get_json):
+    def test_public_repos(self, mock_get_json) -> None:
         mock_get_json.return_value = [
             {"name": "repo1"},
             {"name": "repo2"},
@@ -77,7 +77,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({"license": {"key": "other_license"}}, "my_license", False),
         ({}, "my_license", False)
     ])
-    def test_has_license(self, repo, license_key, expected):
+    def test_has_license(self, repo, license_key, expected) -> None:
         client = GithubOrgClient("test-org")
 
         result = client.has_license(repo, license_key)
