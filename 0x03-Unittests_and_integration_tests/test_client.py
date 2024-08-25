@@ -30,6 +30,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
 
 class TestGithubOrgClient(unittest.TestCase):
+    """TestGithubOrgClient class"""
     # patches the org property of GithubOrgClient to make it a PropertyMock.
     # This allows you to mock the property and control its return value.
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
