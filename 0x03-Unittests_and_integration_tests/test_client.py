@@ -48,3 +48,25 @@ class TestGithubOrgClient(unittest.TestCase):
 
         # Ensure that the org property was accessed exactly once
         mock_org.assert_called_once()
+
+    @patch('client.get_json')
+    def test_public_repos(self, mock_get_json):
+        mock_get_json.return_value = [
+            {"name": "repo1"},
+            {"name": "repo2"},
+            {"name": "repo3"}
+        ]
+
+        with patch('client.GithubOrgClient._public_repos_url',
+                   new_callable=PropertyMock) as m_url:
+
+            m_url.return_value = "https://api.github.com/orgs/test-org/repos"
+
+            client = GithubOrgClient("test-org")
+            repos = client.public_repos()
+
+            self.assertEqual(repos, ["repo1", "repo2", "repo3"])
+            m_url.assert_called_once()
+
+            mock_get_json.assert_called_once_with(
+                "https://api.github.com/orgs/test-org/repos")
