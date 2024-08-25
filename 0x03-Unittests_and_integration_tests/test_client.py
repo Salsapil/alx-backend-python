@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -27,3 +27,24 @@ class TestGithubOrgClient(unittest.TestCase):
 
         # Check that the result matches the mocked return value
         self.assertEqual(result, {"org": "test_org"})
+
+
+class TestGithubOrgClient(unittest.TestCase):
+    # patches the org property of GithubOrgClient to make it a PropertyMock.
+    # This allows you to mock the property and control its return value.
+    @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
+    def test_public_repos_url(self, mock_org):
+        # set to a dictionary with the key repos_url.
+        # This simulates the expected response from the org property.
+        mock_org.return_value = {
+            "repos_url": "https://api.github.com/orgs/test-org/repos"}
+
+        # Instantiate the client
+        client = GithubOrgClient("test-org")
+
+        # Test the _public_repos_url property
+        self.assertEqual(client._public_repos_url,
+                         "https://api.github.com/orgs/test-org/repos")
+
+        # Ensure that the org property was accessed exactly once
+        mock_org.assert_called_once()
