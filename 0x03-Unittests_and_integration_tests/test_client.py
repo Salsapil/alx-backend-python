@@ -14,7 +14,7 @@ class TestGithubOrgClient(unittest.TestCase):
     # patches the get_json method from the client module,
     # making it return a fixed dictiona
     @patch('client.get_json', return_value={"org": "test_org"})
-    def test_org(self, org_name, mock_get_json):
+    def test_org(self, org_name, mock_get_json) -> None:
         # Instantiate the client
         client = GithubOrgClient(org_name)
 
