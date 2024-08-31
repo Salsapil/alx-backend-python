@@ -88,3 +88,22 @@ class TestGithubOrgClient(unittest.TestCase):
 
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected)
+
+
+    @patch('client.get_json')
+    def test_public_repos_with_license(self, mock_get_json) -> None:
+        """ test_public_repos_with_license """
+        # Mock data with various licenses
+        mock_get_json.return_value = [
+            {"name": "repo1", "license": {"key": "apache-2.0"}},
+            {"name": "repo2", "license": {"key": "mit"}},
+            {"name": "repo3", "license": {"key": "apache-2.0"}}
+        ]
+
+        client = GithubOrgClient("test-org")
+        repos = client.public_repos(license="apache-2.0")
+
+        # Expected results with license "apache-2.0"
+        self.assertEqual(repos, ["repo1", "repo3"])
+        mock_get_json.assert_called_once_with(
+            "https://api.github.com/orgs/test-org/repos")
