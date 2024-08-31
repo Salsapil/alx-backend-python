@@ -89,7 +89,6 @@ class TestGithubOrgClient(unittest.TestCase):
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected)
 
-
     @patch('client.get_json')
     def test_public_repos_with_license(self, mock_get_json) -> None:
         """ test_public_repos_with_license """
