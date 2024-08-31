@@ -18,6 +18,7 @@ class TestGetJson(unittest.TestCase):
         ("http://holberton.io", {"payload": False}),
     ])
     def test_get_json(self, test_url, test_payload) -> None:
+        """ test_get_json """
         # temporarily replaces requests.get with a mock object.
         with patch('utils.requests.get') as mock_get:
             # creates a mock response object with a json method
@@ -50,6 +51,7 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b")),
     ])
     def test_access_nested_map_exception(self, nested_map, path) -> None:
+        """ test_access_nested_map_exception """
         with self.assertRaises(KeyError) as err:
             access_nested_map(nested_map, path)
         self.assertEqual(str(err.exception), f"'{path[-1]}'")

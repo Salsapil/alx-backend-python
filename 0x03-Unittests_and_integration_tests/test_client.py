@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" test client """
 import unittest
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
@@ -6,6 +7,7 @@ from client import GithubOrgClient
 
 
 class TestGithubOrgClient(unittest.TestCase):
+    """ TestGithubOrgClient """
     # run the test_org method with different organization names.
     @parameterized.expand([
         ("google",),
@@ -15,6 +17,7 @@ class TestGithubOrgClient(unittest.TestCase):
     # making it return a fixed dictiona
     @patch('client.get_json', return_value={"org": "test_org"})
     def test_org(self, org_name, mock_get_json) -> None:
+        """ test organization """
         # Instantiate the client
         client = GithubOrgClient(org_name)
 
@@ -35,6 +38,7 @@ class TestGithubOrgClient(unittest.TestCase):
     # This allows you to mock the property and control its return value.
     @patch('client.GithubOrgClient.org', new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org) -> None:
+        """test_public_repos_url"""
         # set to a dictionary with the key repos_url.
         # This simulates the expected response from the org property.
         mock_org.return_value = {
@@ -52,6 +56,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mock_get_json) -> None:
+        """ test_public_repos """
         mock_get_json.return_value = [
             {"name": "repo1"},
             {"name": "repo2"},
@@ -78,6 +83,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ({}, "my_license", False)
     ])
     def test_has_license(self, repo, license_key, expected) -> None:
+        """ test_has_license """
         client = GithubOrgClient("test-org")
 
         result = client.has_license(repo, license_key)
